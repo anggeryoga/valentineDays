@@ -91,10 +91,55 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            position: relative;
+            /* Untuk positioning efek love di dalam gambar */
+            overflow: hidden;
+            /* Menyembunyikan elemen yang keluar dari batas gambar */
         }
 
         .image-grid img:hover {
             transform: scale(1.05);
+        }
+
+        /* Love Effect on Image */
+        .love-on-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Agar tidak mengganggu interaksi gambar */
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5em;
+            color: #e45757;
+            animation: fallingHeart linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes fallingHeart {
+            0% {
+                top: -10%;
+                left: var(--random-x);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 110%;
+                left: var(--random-x);
+                opacity: 0;
+            }
         }
 
         /* Message */
@@ -160,19 +205,23 @@
 
         /* Countdown */
         #countdown {
-            font-size: 2.5em;
+            font-size: 2em;
             color: #e45757;
             margin-bottom: 20px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
             /* Tambahkan bayangan teks */
+            text-align: center;
+            /* Pusatkan teks */
+        }
+
+        /* Countdown Rows */
+        .countdown-row {
             display: flex;
-            /* Gunakan flexbox */
             justify-content: space-around;
             /* Distribusi ruang di antara elemen */
             align-items: center;
             /* Pusatkan vertikal (opsional) */
-            text-align: center;
             width: 100%;
             /* Memastikan lebar memenuhi container */
         }
@@ -182,6 +231,8 @@
             text-align: center;
             flex: 1;
             /* Berikan setiap unit fleksibilitas yang sama */
+            margin: 0 5px;
+            /* Ruang di antara unit */
         }
 
         .countdown-unit span {
@@ -226,6 +277,71 @@
             /* Darker Red */
         }
 
+        /* The Modal (background) */
+        .music-modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .music-modal-content {
+            background-color: #fffaf0;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            /* Sesuaikan font */
+        }
+
+        .music-modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #e45757;
+        }
+
+        .music-modal-content p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Style untuk tombol di dalam modal */
+        .music-modal-button {
+            background-color: #e45757;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+            /* Sesuaikan font */
+        }
+
+        .music-modal-button:hover {
+            background-color: #c0392b;
+        }
+
         /* Media Queries */
         @media (max-width: 768px) {
             .container {
@@ -253,16 +369,12 @@
             }
 
             #countdown {
-                font-size: 2em;
-                flex-direction: row;
-                /* Menjaga agar tetap horizontal */
-                justify-content: space-between;
-                /* Sebar elemen */
+                font-size: 1.5em;
+                /* Ukuran lebih kecil di layar kecil */
             }
 
             .countdown-unit {
-                margin: 0;
-                /* Hapus margin tambahan */
+                margin: 0 2px;
             }
         }
     </style>
@@ -300,17 +412,33 @@
         <section id="countdownSection">
             <h2>Time Together</h2>
             <div id="countdown">
-                <div class="countdown-unit">
-                    <span id="years">0</span>
-                    <span>Years</span>
+                <div class="countdown-row">
+                    <div class="countdown-unit">
+                        <span id="years">0</span>
+                        <span>Years</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span id="months">0</span>
+                        <span>Months</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span id="days">0</span>
+                        <span>Days</span>
+                    </div>
                 </div>
-                <div class="countdown-unit">
-                    <span id="months">0</span>
-                    <span>Months</span>
-                </div>
-                <div class="countdown-unit">
-                    <span id="days">0</span>
-                    <span>Days</span>
+                <div class="countdown-row">
+                    <div class="countdown-unit">
+                        <span id="hours">0</span>
+                        <span>Hours</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span id="minutes">0</span>
+                        <span>Minutes</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span id="seconds">0</span>
+                        <span>Seconds</span>
+                    </div>
                 </div>
             </div>
             <button class="btn" onclick="showMemories()">Show Memories</button>
@@ -320,6 +448,7 @@
         <section id="memories">
             <h2>Our Special Memories</h2>
             <div class="image-grid">
+                <!-- Gunakan URL yang BERBEDA untuk setiap gambar -->
                 <img src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                     alt="Memory 1">
                 <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -351,9 +480,22 @@
         </footer>
 
         <audio id="backgroundMusic" loop>
-            <source src="mp3(1).mp3" type="audio/mp3">
+            <source src="https://raw.githubusercontent.com/anggeryoga/valentineDays/main/mp3%20(1).mp3"
+                type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
+
+        <!-- The Modal -->
+        <div id="musicModal" class="music-modal">
+
+            <!-- Modal content -->
+            <div class="music-modal-content">
+                <h2>Valentine's Music</h2>
+                <p>Untuk pengalaman yang lebih romantis, putar musik latar belakangnya ya!</p>
+                <button class="music-modal-button" onclick="playMusicFromModal()">Oke, Putar Musik!</button>
+            </div>
+
+        </div>
     </div>
 
     <script>
@@ -364,7 +506,14 @@
 
         // AUDIO FUNCTION
         const audio = document.getElementById('backgroundMusic');
+        const modal = document.getElementById('musicModal');
         let musicPlayed = false; // Flag untuk menandai apakah musik sudah dimainkan
+
+        // Fungsi untuk memutar musik dari modal
+        function playMusicFromModal() {
+            audio.play();
+            modal.style.display = "none"; // Tutup modal setelah musik diputar
+        }
 
         // Fungsi untuk memutar musik dan menangani promise
         function playAudio() {
@@ -378,10 +527,9 @@
                     // Pemutaran gagal (mungkin karena kebijakan browser)
                     console.error("Gagal memutar musik otomatis:", error);
                     if (!musicPlayed) {
-                        // Tampilkan popup jika musik belum dimainkan sebelumnya
-                        alert("Klik OK untuk memutar musik Valentine!");
-                        audio.play(); // Coba putar lagi setelah interaksi pengguna
-                        musicPlayed = true;
+                        // Tampilkan modal jika musik belum dimainkan sebelumnya
+                        modal.style.display = "block";
+                        musicPlayed = true; // Atur flag agar modal hanya muncul sekali
                     }
                 });
         }
@@ -437,18 +585,27 @@
             const yearsElement = document.getElementById('years');
             const monthsElement = document.getElementById('months');
             const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
 
             function updateCountdown() {
                 const now = new Date();
                 const difference = now - startDate;
 
+                const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365.25));
+                const months = Math.floor(difference / (1000 * 60 * 60 * 24 * 30.44));
                 const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const months = Math.floor(days / 30);
-                const years = Math.floor(months / 12);
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
                 yearsElement.textContent = years;
                 monthsElement.textContent = months % 12;
                 daysElement.textContent = days % 30;
+                hoursElement.textContent = hours;
+                minutesElement.textContent = minutes;
+                secondsElement.textContent = seconds;
             }
 
             updateCountdown();
@@ -464,7 +621,35 @@
         function showMemories() {
             stopCountdown();
             showSection('memories');
-            // Use setTimeout to allow the style to be applied before removing the "active" class
+
+            // Tambahkan efek love ke setiap gambar
+            const images = document.querySelectorAll('.image-grid img');
+            images.forEach(img => {
+                // Pastikan elemen love-on-image hanya ditambahkan sekali
+                if (!img.parentNode.querySelector('.love-on-image')) {
+                    const loveOnImage = document.createElement('div');
+                    loveOnImage.className = 'love-on-image';
+                    img.parentNode.appendChild(loveOnImage); // Tambahkan setelah gambar
+
+                    // Fungsi untuk membuat hati pada gambar tertentu
+                    function createHeart(imgContainer) {
+                        const heart = document.createElement('span');
+                        heart.className = 'heart';
+                        heart.innerHTML = '💖'; // Gunakan emoji hati
+
+                        // Set posisi horizontal acak
+                        heart.style.setProperty('--random-x', `${Math.random() * 100}%`);
+
+                        imgContainer.appendChild(heart);
+
+                        // Hapus hati setelah animasi selesai
+                        heart.addEventListener('animationend', () => heart.remove());
+                    }
+
+                    // Jalankan efek love pada setiap gambar
+                    setInterval(() => createHeart(loveOnImage), 500);
+                }
+            });
         }
 
         // Show Message Section
