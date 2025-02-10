@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day with You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Reset dan General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f0e3;
+            /* Warm Cream */
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #e45757;
+            /* Soft Rose */
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #777;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #e45757;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Images */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Message */
+        .message {
+            background-color: #fffaf0;
+            /* Ivory */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+            color: #777;
+        }
+
+        /* PIN Section */
+        #pinSection {
+            text-align: center;
+        }
+
+        #pinDisplay {
+            font-size: 3em;
+            color: #e45757;
+            margin-bottom: 20px;
+            letter-spacing: 0.3em;
+        }
+
+        .pin-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .pin-btn {
+            background-color: #f0d0c0;
+            /* Light Peach */
+            color: #333;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pin-btn:hover {
+            background-color: #e9967a;
+            /* Darker Peach */
+        }
+
+        #pinError {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Countdown */
+        #countdown {
+            font-size: 2.5em;
+            color: #e45757;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            /* Tambahkan bayangan teks */
+            display: flex;
+            /* Gunakan flexbox */
+            justify-content: space-around;
+            /* Distribusi ruang di antara elemen */
+            align-items: center;
+            /* Pusatkan vertikal (opsional) */
+            text-align: center;
+            width: 100%;
+            /* Memastikan lebar memenuhi container */
+        }
+
+        /* Styling untuk satuan waktu di countdown */
+        .countdown-unit {
+            text-align: center;
+            flex: 1;
+            /* Berikan setiap unit fleksibilitas yang sama */
+        }
+
+        .countdown-unit span {
+            display: block;
+            font-size: 0.8em;
+            color: #777;
+            /* Warna untuk label satuan */
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Hidden Sections (Initially) */
+        #countdownSection,
+        #memories,
+        #message {
+            display: none;
+        }
+
+        /* General Button Style */
+        .btn {
+            background-color: #e45757;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            /* Tambahkan margin top */
+            display: block;
+            /* Membuat tombol menjadi block-level */
+            margin-left: auto;
+            /* Margin otomatis untuk memusatkan horizontal */
+            margin-right: auto;
+            width: fit-content;
+            /* Lebar tombol sesuai konten */
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            /* Darker Red */
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            section {
+                margin-bottom: 60px;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            #pinDisplay {
+                font-size: 2.5em;
+            }
+
+            .pin-btn {
+                font-size: 1rem;
+            }
+
+            #countdown {
+                font-size: 2em;
+                flex-direction: row;
+                /* Menjaga agar tetap horizontal */
+                justify-content: space-between;
+                /* Sebar elemen */
+            }
+
+            .countdown-unit {
+                margin: 0;
+                /* Hapus margin tambahan */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Happy Valentine's Day</h1>
+            <p>A special surprise for my love.</p>
+        </header>
+
+        <!-- PIN Section -->
+        <section id="pinSection">
+            <h2>Enter the PIN</h2>
+            <div id="pinDisplay">_ _ _ _</div>
+            <div id="pinError"></div>
+            <div class="pin-keypad">
+                <button class="pin-btn" onclick="addPin('1')">1</button>
+                <button class="pin-btn" onclick="addPin('2')">2</button>
+                <button class="pin-btn" onclick="addPin('3')">3</button>
+                <button class="pin-btn" onclick="addPin('4')">4</button>
+                <button class="pin-btn" onclick="addPin('5')">5</button>
+                <button class="pin-btn" onclick="addPin('6')">6</button>
+                <button class="pin-btn" onclick="addPin('7')">7</button>
+                <button class="pin-btn" onclick="addPin('8')">8</button>
+                <button class="pin-btn" onclick="addPin('9')">9</button>
+                <button class="pin-btn" onclick="clearPin()">Clear</button>
+                <button class="pin-btn" onclick="addPin('0')">0</button>
+                <button class="pin-btn" onclick="submitPin()">Enter</button>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section id="countdownSection">
+            <h2>Time Together</h2>
+            <div id="countdown">
+                <div class="countdown-unit">
+                    <span id="years">0</span>
+                    <span>Years</span>
+                </div>
+                <div class="countdown-unit">
+                    <span id="months">0</span>
+                    <span>Months</span>
+                </div>
+                <div class="countdown-unit">
+                    <span id="days">0</span>
+                    <span>Days</span>
+                </div>
+            </div>
+            <button class="btn" onclick="showMemories()">Show Memories</button>
+        </section>
+
+        <!-- Memories Section -->
+        <section id="memories">
+            <h2>Our Special Memories</h2>
+            <div class="image-grid">
+                <img src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 1">
+                <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 2">
+                <img src="https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 3">
+                <img src="https://images.pexels.com/photos/207878/pexels-photo-207878.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 4">
+                <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 5">
+                <img src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Memory 6">
+            </div>
+            <button class="btn" onclick="showMessage()">Show Thank You Message</button>
+            <!-- Tombol baru -->
+        </section>
+
+        <!-- Message Section -->
+        <section id="message">
+            <h2>A Message for You</h2>
+            <div class="message">
+                My dearest love, every day with you is a gift. Your love lights up my life and makes everything more
+                beautiful. Thank you for being you. Happy Valentine's Day!
+            </div>
+        </section>
+
+        <footer>
+            © 2024 Made with ❤️ for You
+        </footer>
+
+        <audio id="backgroundMusic" loop>
+            <source src="mp3(1).mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        let currentPin = '';
+        const correctPin = '2234';
+        const startDate = new Date('2023-11-04'); // Sesuaikan tanggal ini
+        let countdownInterval; // Menyimpan interval countdown
+
+        // AUDIO FUNCTION
+        const audio = document.getElementById('backgroundMusic');
+        let musicPlayed = false; // Flag untuk menandai apakah musik sudah dimainkan
+
+        // Fungsi untuk memutar musik dan menangani promise
+        function playAudio() {
+            audio.play()
+                .then(() => {
+                    // Pemutaran berhasil dimulai
+                    musicPlayed = true;
+                    console.log("Musik berhasil diputar otomatis");
+                })
+                .catch(error => {
+                    // Pemutaran gagal (mungkin karena kebijakan browser)
+                    console.error("Gagal memutar musik otomatis:", error);
+                    if (!musicPlayed) {
+                        // Tampilkan popup jika musik belum dimainkan sebelumnya
+                        alert("Klik OK untuk memutar musik Valentine!");
+                        audio.play(); // Coba putar lagi setelah interaksi pengguna
+                        musicPlayed = true;
+                    }
+                });
+        }
+
+        // Panggil fungsi untuk memutar audio saat halaman dimuat
+        window.onload = playAudio;
+
+        // Section visibility functions
+        function showSection(sectionId) {
+            const sections = ['pinSection', 'countdownSection', 'memories', 'message'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (id === sectionId) {
+                    section.style.display = 'block';
+                    // Add the "active" class to trigger the transition effect
+                    setTimeout(() => section.classList.add('active'), 50);
+                } else {
+                    section.style.display = 'none';
+                    section.classList.remove('active'); // Remove the "active" class
+                }
+            });
+        }
+
+        // PIN Functions
+        function addPin(num) {
+            if (currentPin.length < 4) {
+                currentPin += num;
+                updatePinDisplay();
+            }
+        }
+
+        function clearPin() {
+            currentPin = '';
+            updatePinDisplay();
+        }
+
+        function updatePinDisplay() {
+            document.getElementById('pinDisplay').textContent = currentPin.padEnd(4, '_');
+        }
+
+        function submitPin() {
+            if (currentPin === correctPin) {
+                showSection('countdownSection');
+                startCountdown();
+            } else {
+                document.getElementById('pinError').textContent = 'Incorrect PIN. Please try again.';
+                clearPin();
+            }
+        }
+
+        // Countdown Functions
+        function startCountdown() {
+            const yearsElement = document.getElementById('years');
+            const monthsElement = document.getElementById('months');
+            const daysElement = document.getElementById('days');
+
+            function updateCountdown() {
+                const now = new Date();
+                const difference = now - startDate;
+
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const months = Math.floor(days / 30);
+                const years = Math.floor(months / 12);
+
+                yearsElement.textContent = years;
+                monthsElement.textContent = months % 12;
+                daysElement.textContent = days % 30;
+            }
+
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000); // Simpan interval
+        }
+
+        // Function to stop the countdown
+        function stopCountdown() {
+            clearInterval(countdownInterval);
+        }
+
+        // Show Memories Section
+        function showMemories() {
+            stopCountdown();
+            showSection('memories');
+            // Use setTimeout to allow the style to be applied before removing the "active" class
+        }
+
+        // Show Message Section
+        function showMessage() {
+            showSection('message');
+        }
+
+        // Initial State - Show PIN Section
+        showSection('pinSection');
+    </script>
+</body>
+
+</html>
