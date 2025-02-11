@@ -4,11 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Day Surprise</title>
+    <meta name="description"
+        content="Rayakan Hari Valentine bersama Jhone Doe & Jane Done. Kejutan romantis, kenangan indah, dan pesan spesial untuk cinta sejati Anda.">
+    <title>Valentine's Day with Jhone & Jane</title>
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/love-E32PKVmxCZHwHe9tsDH9b4DHIqqagG.png"
+        type="image/png">
+
+    <!-- Open Graph (Facebook, WhatsApp, Telegram) -->
+    <meta property="og:title" content="Valentine's Day with Jhone & Jane">
+    <meta property="og:description"
+        content="Sebuah kejutan romantis dari Jhone Doe untuk Jane Done. Nikmati momen spesial penuh cinta dan kebahagiaan.">
+    <meta property="og:image"
+        content="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/canva-simple-romantic-red-and-white-valentine's-day-card-TMarjUg_rVE-TBAtF01IMpowryj1ZZz604H7pYrmZ9.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://valentine.siin.lol">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Valentine's Day with Jhone & Jane">
+    <meta name="twitter:description"
+        content="Kejutan romantis dari Jhone Doe untuk Jane Done. Rayakan Valentine dengan cinta dan kebahagiaan.">
+    <meta name="twitter:image"
+        content="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/canva-simple-romantic-red-and-white-valentine's-day-card-TMarjUg_rVE-TBAtF01IMpowryj1ZZz604H7pYrmZ9.jpg">
+
+    <!-- SEO Keywords -->
+    <meta name="keywords" content="Valentine, cinta, kejutan romantis, pasangan, Jhone Doe, Jane Done">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&family=Satisfy&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap"
         rel="stylesheet">
     <style>
         /* Reset dan General Styles */
@@ -25,6 +55,7 @@
             color: #333;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative; /* Required for balloon positioning */
         }
 
         /* Container */
@@ -91,87 +122,55 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            cursor: pointer; /* Menambahkan cursor pointer saat di-hover */
+            position: relative;
+            /* Untuk positioning efek love di dalam gambar */
+            overflow: hidden;
+            /* Menyembunyikan elemen yang keluar dari batas gambar */
         }
 
         .image-grid img:hover {
             transform: scale(1.05);
         }
 
-        /* The Modal (background) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
+        /* Love Effect on Image */
+        .love-on-image {
+            position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Semi-transparent background */
+            pointer-events: none;
+            /* Agar tidak mengganggu interaksi gambar */
         }
 
-        /* Modal Content/Box */
-        .modal-content {
-            position: relative;
-            background-color: #fffaf0;
-            /* Ivory */
-            margin: 10% auto;
-            padding: 30px;
-            border: 1px solid #e45757;
-            /* Soft Rose */
-            width: 80%;
-            max-width: 600px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Modal Header */
-        .modal-header {
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: #e45757;
-            /* Soft Rose */
-        }
-
-        /* Modal Body */
-        .modal-body {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .modal-body p {
-            margin-bottom: 10px;
-        }
-
-        .modal-body strong {
-            color: #e45757;
-            /* Soft Rose */
-        }
-
-        /* The Close Button */
-        .close {
+        .heart {
             position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #aaa;
-            font-size: 30px;
-            font-weight: bold;
-            cursor: pointer;
+            font-size: 1.5em;
+            color: #e45757;
+            animation: fallingHeart linear forwards;
+            opacity: 0;
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        @keyframes fallingHeart {
+            0% {
+                top: -10%;
+                left: var(--random-x);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 110%;
+                left: var(--random-x);
+                opacity: 0;
+            }
         }
 
         /* Message */
@@ -309,6 +308,71 @@
             /* Darker Red */
         }
 
+        /* The Modal (background) */
+        .music-modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .music-modal-content {
+            background-color: #fffaf0;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            /* Sesuaikan font */
+        }
+
+        .music-modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #e45757;
+        }
+
+        .music-modal-content p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Style untuk tombol di dalam modal */
+        .music-modal-button {
+            background-color: #e45757;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+            /* Sesuaikan font */
+        }
+
+        .music-modal-button:hover {
+            background-color: #c0392b;
+        }
+
         /* Balloon Effect */
         .balloon {
             position: absolute;
@@ -353,6 +417,7 @@
                 opacity: 0;
             }
         }
+
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -473,19 +538,20 @@
             <div class="image-grid">
                 <!-- Gunakan URL yang BERBEDA untuk setiap gambar -->
                 <img src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 1" onclick="openModal('Memory 1', '2023-03-15', 'Paris', 'Ini adalah perjalanan pertama kita ke luar negeri.')">
+                    alt="Memory 1">
                 <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 2" onclick="openModal('Memory 2', '2023-07-20', 'Bali', 'Momen matahari terbenam yang tak terlupakan.')">
+                    alt="Memory 2">
                 <img src="https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 3" onclick="openModal('Memory 3', '2024-01-01', 'New York', 'Merayakan tahun baru di kota yang tidak pernah tidur.')">
+                    alt="Memory 3">
                 <img src="https://images.pexels.com/photos/207878/pexels-photo-207878.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 4" onclick="openModal('Memory 4', '2022-12-24', 'Rumah', 'Malam Natal yang hangat bersama keluarga.')">
+                    alt="Memory 4">
                 <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 5" onclick="openModal('Memory 5', '2024-02-14', 'Hati Kamu', 'Valentine\'s Day pertama kita. Selamanya di hatiku!')">
+                    alt="Memory 5">
                 <img src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 6" onclick="openModal('Memory 6', '2024-02-14', 'Mimpi Kita', 'Melihat ke masa depan yang penuh mimpi bersama.')">
+                    alt="Memory 6">
             </div>
             <button class="btn" onclick="showMessage()">Show Thank You Message</button>
+            <!-- Tombol baru -->
         </section>
 
         <!-- Message Section -->
@@ -501,47 +567,63 @@
             © 2025 Made with ❤️ for You
         </footer>
 
+        <audio id="backgroundMusic" loop>
+            <source src="https://raw.githubusercontent.com/anggeryoga/valentineDays/main/mp3%20(2).mp3"
+                type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
         <!-- The Modal -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">×</span>
-                <div class="modal-header">
-                    <h2></h2> <!-- Judul akan diisi JavaScript -->
-                </div>
-                <div class="modal-body">
-                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                    <p><strong>Location:</strong> <span id="modalLocation"></span></p>
-                    <p id="modalDescription"></p> <!-- Deskripsi akan diisi JavaScript -->
-                </div>
+        <div id="musicModal" class="music-modal">
+
+            <!-- Modal content -->
+            <div class="music-modal-content">
+                <h2>Valentine's Music</h2>
+                <p>Untuk pengalaman yang lebih romantis, putar musik latar belakangnya ya!</p>
+                <button class="music-modal-button" onclick="playMusicFromModal()">Oke, Putar Musik!</button>
             </div>
+
         </div>
     </div>
 
     <script>
-        // JavaScript untuk menampilkan dan menutup modal
-        function openModal(title, date, location, description) {
-            document.querySelector('#myModal .modal-header h2').textContent = title;
-            document.getElementById('modalDate').textContent = date;
-            document.getElementById('modalLocation').textContent = location;
-            document.getElementById('modalDescription').textContent = description; // Set deskripsi
-            document.getElementById('myModal').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = "none";
-        }
-
-        // Ketika user mengklik di luar modal, tutup modal
-        window.onclick = function (event) {
-            if (event.target == document.getElementById('myModal')) {
-                closeModal();
-            }
-        }
-
         let currentPin = '';
         const correctPin = '2234';
         const startDate = new Date('2023-11-04'); // Sesuaikan tanggal ini
         let countdownInterval; // Menyimpan interval countdown
+
+        // AUDIO FUNCTION
+        const audio = document.getElementById('backgroundMusic');
+        const modal = document.getElementById('musicModal');
+        let musicPlayed = false; // Flag untuk menandai apakah musik sudah dimainkan
+
+        // Fungsi untuk memutar musik dari modal
+        function playMusicFromModal() {
+            audio.play();
+            modal.style.display = "none"; // Tutup modal setelah musik diputar
+        }
+
+        // Fungsi untuk memutar musik dan menangani promise
+        function playAudio() {
+            audio.play()
+                .then(() => {
+                    // Pemutaran berhasil dimulai
+                    musicPlayed = true;
+                    console.log("Musik berhasil diputar otomatis");
+                })
+                .catch(error => {
+                    // Pemutaran gagal (mungkin karena kebijakan browser)
+                    console.error("Gagal memutar musik otomatis:", error);
+                    if (!musicPlayed) {
+                        // Tampilkan modal jika musik belum dimainkan sebelumnya
+                        modal.style.display = "block";
+                        musicPlayed = true; // Atur flag agar modal hanya muncul sekali
+                    }
+                });
+        }
+
+        // Panggil fungsi untuk memutar audio saat halaman dimuat
+        window.onload = playAudio;
 
         // Section visibility functions
         function showSection(sectionId) {
@@ -627,6 +709,35 @@
         function showMemories() {
             stopCountdown();
             showSection('memories');
+
+            // Tambahkan efek love ke setiap gambar
+            const images = document.querySelectorAll('.image-grid img');
+            images.forEach(img => {
+                // Pastikan elemen love-on-image hanya ditambahkan sekali
+                if (!img.parentNode.querySelector('.love-on-image')) {
+                    const loveOnImage = document.createElement('div');
+                    loveOnImage.className = 'love-on-image';
+                    img.parentNode.appendChild(loveOnImage); // Tambahkan setelah gambar
+
+                    // Fungsi untuk membuat hati pada gambar tertentu
+                    function createHeart(imgContainer) {
+                        const heart = document.createElement('span');
+                        heart.className = 'heart';
+                        heart.innerHTML = '💖'; // Gunakan emoji hati
+
+                        // Set posisi horizontal acak
+                        heart.style.setProperty('--random-x', `${Math.random() * 100}%`);
+
+                        imgContainer.appendChild(heart);
+
+                        // Hapus hati setelah animasi selesai
+                        heart.addEventListener('animationend', () => heart.remove());
+                    }
+
+                    // Jalankan efek love pada setiap gambar
+                    setInterval(() => createHeart(loveOnImage), 500);
+                }
+            });
         }
 
         // Show Message Section
@@ -648,7 +759,7 @@
                 balloon.style.setProperty('--balloon-start-x', `${Math.random() * 100}%`);
                 balloon.style.setProperty('--balloon-delay', `${Math.random() * 5}s`); // Delay acak
                 balloonContainer.appendChild(balloon);
-            }
+            Q}
         });
     </script>
 </body>
