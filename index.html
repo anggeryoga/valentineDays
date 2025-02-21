@@ -35,13 +35,26 @@
     <!-- SEO Keywords -->
     <meta name="keywords" content="Valentine, cinta, kejutan romantis, pasangan, Jhone Doe, Jane Done">
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&family=Dancing+Script:wght@400;700&family=Satisfy&display=swap"
         rel="stylesheet">
+
+    <!-- Styles -->
     <style>
-        /* Reset dan General Styles */
+        :root {
+            --primary-color: #e45757;
+            --secondary-color: #ff69b4;
+            --text-color: #333;
+            --light-bg: #f8f0e3;
+            --font-family-primary: 'Playfair Display', serif;
+            --font-family-secondary: 'Poppins', sans-serif;
+            --font-family-decorative: 'Dancing Script', cursive;
+            --font-family-pin: 'Satisfy', cursive;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -49,16 +62,14 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f0e3;
-            /* Warm Cream */
-            color: #333;
+            font-family: var(--font-family-secondary);
+            background-color: var(--light-bg);
+            color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative; /* Required for balloon positioning */
+            position: relative;
         }
 
-        /* Container */
         .container {
             max-width: 960px;
             margin: 0 auto;
@@ -66,19 +77,31 @@
             text-align: center;
         }
 
-        /* Header */
         header {
             text-align: center;
             margin-bottom: 60px;
         }
 
         header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: #e45757;
-            /* Soft Rose */
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-family-decorative);
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         header p {
@@ -91,7 +114,12 @@
             margin-bottom: 80px;
             opacity: 0;
             transform: translateY(50px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transition: opacity 0.7s ease, transform 0.7s ease, height 0.5s ease;
+            /* Added height transition */
+            overflow: hidden;
+            /* Ensure content doesn't overflow during transition */
+            height: auto;
+            /* Allows section to adjust height dynamically */
         }
 
         section.active {
@@ -100,9 +128,9 @@
         }
 
         section h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-family-primary);
             font-size: 2.5rem;
-            color: #e45757;
+            color: var(--primary-color);
             margin-bottom: 25px;
             text-align: center;
         }
@@ -115,74 +143,86 @@
             margin-top: 30px;
         }
 
-        .image-grid img {
+        /* Memory Card Styling */
+        .memory-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(228, 87, 87, 0.2);
+        }
+
+        .memory-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-            /* Untuk positioning efek love di dalam gambar */
-            overflow: hidden;
-            /* Menyembunyikan elemen yang keluar dari batas gambar */
+            transition: transform 0.5s ease;
         }
 
-        .image-grid img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Love Effect on Image */
-        .love-on-image {
+        .memory-info {
             position: absolute;
-            top: 0;
+            bottom: -100%;
             left: 0;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            /* Agar tidak mengganggu interaksi gambar */
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            transition: bottom 0.5s ease;
+            text-align: left;
         }
 
-        .heart {
-            position: absolute;
+        .memory-card:hover .memory-info {
+            bottom: 0;
+        }
+
+        .memory-title {
+            font-family: var(--font-family-decorative);
             font-size: 1.5em;
-            color: #e45757;
-            animation: fallingHeart linear forwards;
-            opacity: 0;
+            color: var(--primary-color);
+            margin-bottom: 8px;
         }
 
-        @keyframes fallingHeart {
-            0% {
-                top: -10%;
-                left: var(--random-x);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                top: 110%;
-                left: var(--random-x);
-                opacity: 0;
-            }
+        .memory-date {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 8px;
         }
+
+        .memory-location {
+            display: inline-flex;
+            align-items: center;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .memory-location:hover {
+            text-decoration: underline;
+        }
+
 
         /* Message */
         .message {
-            background-color: #fffaf0;
-            /* Ivory */
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            font-size: 1.2rem;
-            color: #555;
+            background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(228, 87, 87, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message::before {
+            content: '❤️';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2em;
+            opacity: 0.1;
         }
 
         /* Footer */
@@ -193,14 +233,40 @@
             color: #777;
         }
 
+        /* General Button Style */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
         /* PIN Section */
         #pinSection {
             text-align: center;
         }
 
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            /* Space between pin input and image */
+        }
+
         #pinDisplay {
-            font-size: 3em;
-            color: #e45757;
+            font-family: var(--font-family-pin);
+            font-size: 3.5em;
+            color: var(--primary-color);
             margin-bottom: 20px;
             letter-spacing: 0.3em;
         }
@@ -214,19 +280,20 @@
 
         .pin-btn {
             background-color: #f0d0c0;
-            /* Light Peach */
-            color: #333;
+            color: var(--text-color);
             border: none;
             padding: 15px;
             font-size: 1.2rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-family: var(--font-family-secondary);
+            /* Use consistent font */
         }
 
         .pin-btn:hover {
             background-color: #e9967a;
-            /* Darker Peach */
+            transform: scale(1.05);
         }
 
         #pinError {
@@ -237,40 +304,30 @@
         /* Countdown */
         #countdown {
             font-size: 2em;
-            color: #e45757;
+            color: var(--primary-color);
             margin-bottom: 20px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            /* Tambahkan bayangan teks */
             text-align: center;
-            /* Pusatkan teks */
         }
 
-        /* Countdown Rows */
         .countdown-row {
             display: flex;
             justify-content: space-around;
-            /* Distribusi ruang di antara elemen */
             align-items: center;
-            /* Pusatkan vertikal (opsional) */
             width: 100%;
-            /* Memastikan lebar memenuhi container */
         }
 
-        /* Styling untuk satuan waktu di countdown */
         .countdown-unit {
             text-align: center;
             flex: 1;
-            /* Berikan setiap unit fleksibilitas yang sama */
             margin: 0 5px;
-            /* Ruang di antara unit */
         }
 
         .countdown-unit span {
             display: block;
             font-size: 0.8em;
             color: #777;
-            /* Warna untuk label satuan */
             text-transform: uppercase;
             margin-top: 5px;
         }
@@ -282,72 +339,64 @@
             display: none;
         }
 
-        /* General Button Style */
-        .btn {
-            background-color: #e45757;
-            color: white;
+        /* Back Button Styles */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Space between icon and text */
+            background-color: #f0d0c0;
+            color: var(--text-color);
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 25px; /* Rounded corners */
             cursor: pointer;
             font-size: 1rem;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             margin-top: 20px;
-            /* Tambahkan margin top */
-            display: block;
-            /* Membuat tombol menjadi block-level */
-            margin-left: auto;
-            /* Margin otomatis untuk memusatkan horizontal */
-            margin-right: auto;
-            width: fit-content;
-            /* Lebar tombol sesuai konten */
+            font-family: var(--font-family-secondary);
         }
 
-        .btn:hover {
-            background-color: #c0392b;
-            /* Darker Red */
+        .back-btn:hover {
+            background-color: #e9967a;
+            transform: scale(1.05);
+        }
+
+        .back-btn::before {
+            content: '←'; /* Unicode arrow icon */
+            font-size: 1.2rem;
         }
 
         /* The Modal (background) */
         .music-modal {
             display: none;
-            /* Hidden by default */
             position: fixed;
-            /* Stay in place */
             z-index: 1;
-            /* Sit on top */
             left: 0;
             top: 0;
             width: 100%;
-            /* Full width */
             height: 100%;
-            /* Full height */
             overflow: auto;
-            /* Enable scroll if needed */
             background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
         }
 
         /* Modal Content/Box */
         .music-modal-content {
             background-color: #fffaf0;
             margin: 15% auto;
-            /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            /* Could be more or less, depending on screen size */
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            font-family: 'Poppins', sans-serif;
-            /* Sesuaikan font */
+            font-family: var(--font-family-secondary);
         }
 
         .music-modal-content h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-family-primary);
             font-size: 2em;
-            color: #e45757;
+            color: var(--primary-color);
         }
 
         .music-modal-content p {
@@ -357,20 +406,19 @@
 
         /* Style untuk tombol di dalam modal */
         .music-modal-button {
-            background-color: #e45757;
+            background-color: var(--primary-color);
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-            font-family: 'Poppins', sans-serif;
-            /* Sesuaikan font */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-family: var(--font-family-secondary);
         }
 
         .music-modal-button:hover {
             background-color: #c0392b;
+            transform: scale(1.05);
         }
 
         /* Balloon Effect */
@@ -379,22 +427,17 @@
             width: 50px;
             height: 65px;
             border-radius: 50%;
-            background-color: rgba(228, 87, 87, 0.7); /* Soft Rose with opacity */
+            background-color: rgba(228, 87, 87, 0.7);
             animation: floatUp 5s linear infinite;
             bottom: -70px;
-            /* Start below the viewport */
             left: var(--balloon-start-x);
-            /* Use custom property for random start position */
             opacity: 0;
-            /* Initially hidden */
             animation-delay: var(--balloon-delay);
-            /* Delay based on custom property */
         }
 
         /* Different colors for the balloons */
         .balloon:nth-child(even) {
             background-color: rgba(240, 208, 192, 0.7);
-            /* Light Peach with opacity */
         }
 
         @keyframes floatUp {
@@ -413,11 +456,131 @@
 
             100% {
                 transform: translateY(-800px);
-                /* Adjust the distance */
                 opacity: 0;
             }
         }
 
+        /* Floating Hearts Animation */
+        @keyframes floatingHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart {
+            position: fixed;
+            font-size: 1.5em;
+            color: var(--primary-color);
+            animation: floatingHeart 5s linear infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Flower Elements */
+        .flower {
+            position: absolute;
+            width: 30px;
+            /* Adjust size as needed */
+            height: 30px;
+            /* Adjust size as needed */
+            background-image: url('https://i.pinimg.com/originals/e9/01/ca/e901ca53d8061e4897455f2f2c3720d9.png');
+            /* Replace with your flower image URL */
+            background-size: cover;
+            pointer-events: none;
+            /* Avoid interfering with interactions */
+            animation: floatFlowers 8s linear infinite;
+            /* Adjust animation duration */
+            opacity: 0;
+            /* Initially hidden */
+            animation-delay: var(--flower-delay);
+            left: var(--flower-start-x);
+            bottom: 0;
+        }
+
+        @keyframes floatFlowers {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+                /* Gradual appearance */
+            }
+
+            90% {
+                opacity: 0.7;
+                /* Maintain visibility */
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                /* Move upwards */
+                opacity: 0;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Keyframes for sparkle animation */
+        @keyframes sparkle {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -441,17 +604,25 @@
                 font-size: 2.5em;
             }
 
-            .pin-btn {
+            .pin-keypad {
                 font-size: 1rem;
             }
 
             #countdown {
                 font-size: 1.5em;
-                /* Ukuran lebih kecil di layar kecil */
             }
 
             .countdown-unit {
                 margin: 0 2px;
+            }
+
+            .pin-container {
+                flex-direction: column;
+                /* Stack the PIN input and image */
+                align-items: center;
+                /* Center them horizontally */
+                gap: 20px;
+                /* Reduce gap for smaller screens */
             }
         }
     </style>
@@ -469,6 +640,19 @@
     <div class="balloon"></div>
     <div class="balloon"></div>
     <div class="balloon"></div>
+
+    <!-- Flower Elements -->
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+
     <div class="container">
         <header>
             <h1>Happy Valentine's Day</h1>
@@ -478,21 +662,26 @@
         <!-- PIN Section -->
         <section id="pinSection">
             <h2>Enter the PIN</h2>
-            <div id="pinDisplay">_ _ _ _</div>
-            <div id="pinError"></div>
-            <div class="pin-keypad">
-                <button class="pin-btn" onclick="addPin('1')">1</button>
-                <button class="pin-btn" onclick="addPin('2')">2</button>
-                <button class="pin-btn" onclick="addPin('3')">3</button>
-                <button class="pin-btn" onclick="addPin('4')">4</button>
-                <button class="pin-btn" onclick="addPin('5')">5</button>
-                <button class="pin-btn" onclick="addPin('6')">6</button>
-                <button class="pin-btn" onclick="addPin('7')">7</button>
-                <button class="pin-btn" onclick="addPin('8')">8</button>
-                <button class="pin-btn" onclick="addPin('9')">9</button>
-                <button class="pin-btn" onclick="clearPin()">Clear</button>
-                <button class="pin-btn" onclick="addPin('0')">0</button>
-                <button class="pin-btn" onclick="submitPin()">Enter</button>
+            <div class="pin-container">
+                <div>
+                    <div id="pinDisplay">_ _ _ _</div>
+                    <div id="pinError"></div>
+                    <div class="pin-keypad">
+                        <button class="pin-btn" onclick="addPin('1')">1</button>
+                        <button class="pin-btn" onclick="addPin('2')">2</button>
+                        <button class="pin-btn" onclick="addPin('3')">3</button>
+                        <button class="pin-btn" onclick="addPin('4')">4</button>
+                        <button class="pin-btn" onclick="addPin('5')">5</button>
+                        <button class="pin-btn" onclick="addPin('6')">6</button>
+                        <button class="pin-btn" onclick="addPin('7')">7</button>
+                        <button class="pin-btn" onclick="addPin('8')">8</button>
+                        <button class="pin-btn" onclick="addPin('9')">9</button>
+                        <button class="pin-btn" onclick="clearPin()">Clear</button>
+                        <button class="pin-btn" onclick="addPin('0')">0</button>
+                        <button class="pin-btn" onclick="submitPin()">Enter</button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -530,28 +719,67 @@
                 </div>
             </div>
             <button class="btn" onclick="showMemories()">Show Memories</button>
+            <button class="back-btn" onclick="showPinSection()">Back</button>
         </section>
 
         <!-- Memories Section -->
         <section id="memories">
             <h2>Our Special Memories</h2>
             <div class="image-grid">
-                <!-- Gunakan URL yang BERBEDA untuk setiap gambar -->
-                <img src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 1">
-                <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 2">
-                <img src="https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 3">
-                <img src="https://images.pexels.com/photos/207878/pexels-photo-207878.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 4">
-                <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 5">
-                <img src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Memory 6">
+                <div class="memory-card">
+                    <img src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg" alt="First Date">
+                    <div class="memory-info">
+                        <h3 class="memory-title">Our First Date</h3>
+                        <p class="memory-date">November 4, 2023</p>
+                        <p>The magical evening when everything began. You were wearing that beautiful red dress, and I
+                            couldn't take my eyes off you.</p>
+                        <a href="https://maps.google.com/?q=Central+Park+NYC" class="memory-location"
+                            target="_blank">
+                            📍 Central Park, New York
+                        </a>
+                    </div>
+                </div>
+                <!-- Add more memory cards with different locations and stories -->
+                <div class="memory-card">
+                    <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg" alt="Beach Day">
+                    <div class="memory-info">
+                        <h3 class="memory-title">Sunset at the Beach</h3>
+                        <p class="memory-date">December 15, 2023</p>
+                        <p>Remember when we spent the whole day at the beach? The sunset was as beautiful as your
+                            smile.</p>
+                        <a href="https://maps.google.com/?q=Malibu+Beach" class="memory-location" target="_blank">
+                            📍 Malibu Beach
+                        </a>
+                    </div>
+                </div>
+                <div class="memory-card">
+                    <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg" alt="Beach Day">
+                    <div class="memory-info">
+                        <h3 class="memory-title">Sunset at the Beach</h3>
+                        <p class="memory-date">December 15, 2023</p>
+                        <p>Remember when we spent the whole day at the beach? The sunset was as beautiful as your
+                            smile.</p>
+                        <a href="https://maps.google.com/?q=Malibu+Beach" class="memory-location" target="_blank">
+                            📍 Malibu Beach
+                        </a>
+                    </div>
+                </div>
+                <div class="memory-card">
+                    <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg" alt="Beach Day">
+                    <div class="memory-info">
+                        <h3 class="memory-title">Sunset at the Beach</h3>
+                        <p class="memory-date">December 15, 2023</p>
+                        <p>Remember when we spent the whole day at the beach? The sunset was as beautiful as your
+                            smile.</p>
+                        <a href="https://maps.google.com/?q=Malibu+Beach" class="memory-location" target="_blank">
+                            📍 Malibu Beach
+                        </a>
+                    </div>
+                </div>
+
             </div>
             <button class="btn" onclick="showMessage()">Show Thank You Message</button>
-            <!-- Tombol baru -->
+            <button class="back-btn" onclick="showCountdownSection()">Back</button>
         </section>
 
         <!-- Message Section -->
@@ -561,6 +789,7 @@
                 My dearest love, every day with you is a gift. Your love lights up my life and makes everything more
                 beautiful. Thank you for being you. Happy Valentine's Day!
             </div>
+            <button class="back-btn" onclick="showMemoriesSection()">Back</button>
         </section>
 
         <footer>
@@ -568,7 +797,7 @@
         </footer>
 
         <audio id="backgroundMusic" loop>
-            <source src="https://raw.githubusercontent.com/anggeryoga/valentineDays/main/mp3%20(2).mp3"
+            <source src="mp3 (1).mp3"
                 type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
@@ -587,56 +816,51 @@
     </div>
 
     <script>
+        // JavaScript Code
         let currentPin = '';
         const correctPin = '2234';
-        const startDate = new Date('2023-11-04'); // Sesuaikan tanggal ini
-        let countdownInterval; // Menyimpan interval countdown
-
-        // AUDIO FUNCTION
+        const startDate = new Date('2023-11-04');
+        let countdownInterval;
         const audio = document.getElementById('backgroundMusic');
         const modal = document.getElementById('musicModal');
-        let musicPlayed = false; // Flag untuk menandai apakah musik sudah dimainkan
+        let musicPlayed = false;
 
-        // Fungsi untuk memutar musik dari modal
+        // Function to play music from modal
         function playMusicFromModal() {
             audio.play();
-            modal.style.display = "none"; // Tutup modal setelah musik diputar
+            modal.style.display = "none";
         }
 
-        // Fungsi untuk memutar musik dan menangani promise
+        // Function to play audio with promise handling
         function playAudio() {
             audio.play()
                 .then(() => {
-                    // Pemutaran berhasil dimulai
                     musicPlayed = true;
-                    console.log("Musik berhasil diputar otomatis");
+                    console.log("Music auto-played successfully");
                 })
                 .catch(error => {
-                    // Pemutaran gagal (mungkin karena kebijakan browser)
-                    console.error("Gagal memutar musik otomatis:", error);
+                    console.error("Failed to auto-play music:", error);
                     if (!musicPlayed) {
-                        // Tampilkan modal jika musik belum dimainkan sebelumnya
                         modal.style.display = "block";
-                        musicPlayed = true; // Atur flag agar modal hanya muncul sekali
+                        musicPlayed = true;
                     }
                 });
         }
 
-        // Panggil fungsi untuk memutar audio saat halaman dimuat
+        // Call playAudio on window load
         window.onload = playAudio;
 
-        // Section visibility functions
+        // Function to show sections
         function showSection(sectionId) {
             const sections = ['pinSection', 'countdownSection', 'memories', 'message'];
             sections.forEach(id => {
                 const section = document.getElementById(id);
                 if (id === sectionId) {
                     section.style.display = 'block';
-                    // Add the "active" class to trigger the transition effect
                     setTimeout(() => section.classList.add('active'), 50);
                 } else {
                     section.style.display = 'none';
-                    section.classList.remove('active'); // Remove the "active" class
+                    section.classList.remove('active');
                 }
             });
         }
@@ -697,52 +921,58 @@
             }
 
             updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000); // Simpan interval
+            countdownInterval = setInterval(updateCountdown, 1000);
         }
 
-        // Function to stop the countdown
         function stopCountdown() {
             clearInterval(countdownInterval);
         }
 
-        // Show Memories Section
+        // Show Memories Section with enhancements
         function showMemories() {
             stopCountdown();
             showSection('memories');
 
-            // Tambahkan efek love ke setiap gambar
-            const images = document.querySelectorAll('.image-grid img');
+            // Function to create floating hearts
+            function createFloatingHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                document.body.appendChild(heart);
+
+                heart.addEventListener('animationend',() => {
+                    heart.remove();
+                });
+            }
+
+            // Create floating hearts periodically
+            setInterval(createFloatingHeart, 2000);
+
+            // Add sparkling effect to images
+            const images = document.querySelectorAll('.memory-card img');
             images.forEach(img => {
-                // Pastikan elemen love-on-image hanya ditambahkan sekali
-                if (!img.parentNode.querySelector('.love-on-image')) {
-                    const loveOnImage = document.createElement('div');
-                    loveOnImage.className = 'love-on-image';
-                    img.parentNode.appendChild(loveOnImage); // Tambahkan setelah gambar
-
-                    // Fungsi untuk membuat hati pada gambar tertentu
-                    function createHeart(imgContainer) {
-                        const heart = document.createElement('span');
-                        heart.className = 'heart';
-                        heart.innerHTML = '💖'; // Gunakan emoji hati
-
-                        // Set posisi horizontal acak
-                        heart.style.setProperty('--random-x', `${Math.random() * 100}%`);
-
-                        imgContainer.appendChild(heart);
-
-                        // Hapus hati setelah animasi selesai
-                        heart.addEventListener('animationend', () => heart.remove());
-                    }
-
-                    // Jalankan efek love pada setiap gambar
-                    setInterval(() => createHeart(loveOnImage), 500);
-                }
+                img.style.animation = 'sparkle 2s infinite';
             });
         }
+
 
         // Show Message Section
         function showMessage() {
             showSection('message');
+        }
+
+        // Back Functions
+        function showPinSection() {
+            showSection('pinSection');
+        }
+
+        function showCountdownSection() {
+            showSection('countdownSection');
+        }
+
+        function showMemoriesSection() {
+            showSection('memories');
         }
 
         // Initial State - Show PIN Section
@@ -751,16 +981,75 @@
         // Balloon Effect
         document.addEventListener('DOMContentLoaded', function () {
             const balloonContainer = document.body;
-            const numberOfBalloons = 10; // Jumlah balon
+            const numberOfBalloons = 10;
 
             for (let i = 0; i < numberOfBalloons; i++) {
                 const balloon = document.createElement('div');
                 balloon.className = 'balloon';
                 balloon.style.setProperty('--balloon-start-x', `${Math.random() * 100}%`);
-                balloon.style.setProperty('--balloon-delay', `${Math.random() * 5}s`); // Delay acak
+                balloon.style.setProperty('--balloon-delay', `${Math.random() * 5}s`);
                 balloonContainer.appendChild(balloon);
-            Q}
+            }
+
+            // Flower Effect
+            const flowerContainer = document.body;
+            const numberOfFlowers = 10;
+
+            for (let i = 0; i < numberOfFlowers; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.style.setProperty('--flower-start-x', `${Math.random() * 100}%`);
+                flower.style.setProperty('--flower-delay', `${Math.random() * 8}s`);
+                flowerContainer.appendChild(flower);
+            }
         });
+
+        // Enhanced memory card click handler
+        document.querySelectorAll('.memory-card').forEach(card => {
+            card.addEventListener('click', function () {
+                const info = this.querySelector('.memory-info');
+                const title = info.querySelector('.memory-title').textContent;
+                const date = info.querySelector('.memory-date').textContent;
+                const description = info.querySelector('p:not(.memory-date)').textContent;
+                const location = info.querySelector('.memory-location').getAttribute('href');
+
+                // Create and show modal with memory details
+                showMemoryModal(title, date, description, location, this.querySelector('img').src);
+            });
+        });
+
+        // Function to show memory modal
+        function showMemoryModal(title, date, description, location, imageSrc) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal">×</span>
+                    <img src="${imageSrc}" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                    <h2 style="color: #e45757;">${title}</h2>
+                    <p style="color: #777;">${date}</p>
+                    <p style="margin: 20px 0;">${description}</p>
+                    <a href="${location}" target="_blank" class="memory-location">
+                        📍 View Location
+                    </a>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            modal.style.display = 'block';
+
+            // Close modal functionality
+            const closeBtn = modal.querySelector('.close-modal');
+            closeBtn.onclick = function () {
+                modal.remove();
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.remove();
+                }
+            }
+        }
     </script>
 </body>
 
