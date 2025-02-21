@@ -1004,19 +1004,7 @@
             }
         });
 
-        // Enhanced memory card click handler
-        document.querySelectorAll('.memory-card').forEach(card => {
-            card.addEventListener('click', function () {
-                const info = this.querySelector('.memory-info');
-                const title = info.querySelector('.memory-title').textContent;
-                const date = info.querySelector('.memory-date').textContent;
-                const description = info.querySelector('p:not(.memory-date)').textContent;
-                const location = info.querySelector('.memory-location').getAttribute('href');
 
-                // Create and show modal with memory details
-                showMemoryModal(title, date, description, location, this.querySelector('img').src);
-            });
-        });
 
         // Function to show memory modal
         function showMemoryModal(title, date, description, location, imageSrc) {
